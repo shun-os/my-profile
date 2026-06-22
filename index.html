@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Portfolio — 熊谷 駿介</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600;700&family=Noto+Sans+JP:wght@300;400;500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<!-- MOBILE HEADER -->
+<header class="mobile-header">
+  <span class="mobile-name">kumatsuni_shun</span>
+  <button class="hamburger" id="hamburger" aria-label="メニューを開く">
+    <span></span>
+    <span></span>
+    <span></span>
+  </button>
+</header>
+
+<!-- OVERLAY -->
+<div class="overlay" id="overlay"></div>
+
+<div class="layout">
+
+  <!-- SIDEBAR -->
+  <aside class="sidebar" id="sidebar">
+    <div class="sidebar-profile">
+      <div class="sidebar-avatar">SK</div>
+      <div class="sidebar-name">kumatsuni_shun</div>
+      <div class="sidebar-role">Web Engineer / Student</div>
+    </div>
+
+    <nav class="sidebar-nav">
+      <div class="nav-label">Navigation</div>
+      <a class="nav-item active" href="#projects"><span class="nav-dot"></span>Projects</a>
+      <a class="nav-item" href="#skills"><span class="nav-dot"></span>Skills</a>
+      <a class="nav-item" href="#strengths"><span class="nav-dot"></span>Strengths</a>
+      <a class="nav-item" href="#experience"><span class="nav-dot"></span>Experience</a>
+
+      <div class="nav-label">Info</div>
+      <a class="nav-item" href="#about"><span class="nav-dot"></span>About</a>
+    </nav>
+
+    <div class="sidebar-links">
+      <a class="sidebar-link" href="https://github.com/shun-os" target="_blank">
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/></svg>
+        github.com/shun-os
+      </a>
+      <div class="sidebar-link" style="color:var(--text-muted); cursor:default;">
+        <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></svg>
+        京都コンピュータ学院
+      </div>
+      <div class="sidebar-link" style="color:var(--text-muted); cursor:default;">
+        <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor"><path d="M19 4h-1V2h-2v2H8V2H6v2H5c-1.11 0-1.99.9-1.99 2L3 20c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 16H5V9h14v11z"/></svg>
+        卒業予定 2028年3月
+      </div>
+    </div>
+  </aside>
+
+  <!-- MAIN CONTENT -->
+  <main class="main">
+
+    <!-- HERO -->
+    <div class="hero" id="about">
+      <div class="hero-prompt">cat profile.md<span class="cursor"></span></div>
+      <div class="hero-name">熊谷 <span>駿介</span></div>
+      <p class="hero-subtitle">
+        「思考力（AI）・実装力（IT）・現場力（旅館）」の3軸で課題解決に取り組む、<br>
+        指揮官型エンジニアを目指す学生エンジニア。<br>
+        ビジネス構想からフルスクラッチ実装まで一貫して担える人材を目指しています。
+      </p>
+      <div class="hero-tags">
+        <span class="tag blue">PHP / MySQL</span>
+        <span class="tag blue">Next.js / Supabase</span>
+        <span class="tag blue">Docker / Linux</span>
+        <span class="tag blue">GitHub Actions</span>
+        <span class="tag green">YOLOv8 / GPT-4o</span>
+        <span class="tag green">Stripe</span>
+        <span class="tag orange">2× 最優秀賞受賞</span>
+      </div>
+    </div>
+
+    <!-- PROJECTS -->
+    <section class="section" id="projects">
+      <div class="section-header">
+        <span class="section-icon">./projects</span>
+        <span class="section-title">開発実績</span>
+      </div>
+
+      <!-- Project 1 -->
+      <div class="project-card">
+        <div class="project-header">
+          <div>
+            <div class="project-num">01 / WORKSHOP</div>
+            <div class="project-title">産学連携「生成AIワークショップ」新規事業構想</div>
+            <div class="project-period">2023.06 / 2024.11</div>
+          </div>
+          <span class="project-badge award">★ 2回連続 最優秀賞</span>
+        </div>
+        <p class="project-desc">
+          IT企業との合同ワークショップで、AIを活用したビジネスモデルを提案。
+          2023年は観光×メタバース「MetaRide Kyoto」、2024年は物流2024年問題に対するAR教育システムを企画し、いずれも全チーム中1位を獲得。
+        </p>
+        <div class="project-result">
+          <strong>→ Outcome</strong>
+          対立意見の強みを掛け合わせて統合する構想力と、ビジネス文脈での技術提案力を評価され2大会連続受賞。
+        </div>
+      </div>
+
+      <!-- Project 2 -->
+      <div class="project-card">
+        <div class="project-header">
+          <div>
+            <div class="project-num">02 / TEAM DEV</div>
+            <div class="project-title">受注・決済管理Webアプリケーション（チーム開発）</div>
+            <div class="project-period">約2ヶ月 / 4名チーム</div>
+          </div>
+          <span class="project-badge">Backend + Infra</span>
+        </div>
+        <div class="project-tech">
+          <span class="tech-tag">PHP</span>
+          <span class="tech-tag">MySQL</span>
+          <span class="tech-tag">Docker</span>
+          <span class="tech-tag">Linux</span>
+          <span class="tech-tag">GitHub Actions</span>
+        </div>
+        <p class="project-desc">
+          4名チームのバックエンド・インフラ担当として約3,500行を実装。
+          メンバー間の技術力差による進捗遅延に対し、API仕様の言語化・GitHubコードレビュー体制の整備・外部API連携プロトタイプの先行作成で仕組みから解決。
+        </p>
+        <div class="project-result">
+          <strong>→ Outcome</strong>
+          当初計画より2週間前倒しでバグゼロのシステムを完成。技術的不確実性を早期に除去するアーキテクト的アプローチが機能した。
+        </div>
+      </div>
+
+      <!-- Project 3 -->
+      <div class="project-card">
+        <div class="project-header">
+          <div>
+            <div class="project-num">03 / SOLO DEV</div>
+            <div class="project-title">ギフト注文管理システム（個人フルスクラッチ開発）</div>
+            <div class="project-period">2025.04 〜 継続中</div>
+          </div>
+          <span class="project-badge">In Progress</span>
+        </div>
+        <div class="project-tech">
+          <span class="tech-tag">PHP</span>
+          <span class="tech-tag">MySQL</span>
+          <span class="tech-tag">HTML / CSS</span>
+        </div>
+        <p class="project-desc">
+          フレームワーク不使用でDB正規化・セッション管理から自力実装。旅館での就業経験を活かし、ITに不慣れな現場スタッフでも操作できるUI設計にこだわっている。
+        </p>
+        <div class="project-result">
+          <strong>→ Focus</strong>
+          技術の内部構造を根本から理解すること、および現場目線のUX設計の両立。
+        </div>
+      </div>
+
+      <!-- Project 4 -->
+      <div class="project-card">
+        <div class="project-header">
+          <div>
+            <div class="project-num">04 / HACKATHON</div>
+            <div class="project-title">スポーツ用品提案AIシステム（Bluvicハッカソン）</div>
+            <div class="project-period">2026.05</div>
+          </div>
+          <span class="project-badge">Hackathon</span>
+        </div>
+        <div class="project-tech">
+          <span class="tech-tag">YOLOv8</span>
+          <span class="tech-tag">ChatGPT API (gpt-4o)</span>
+          <span class="tech-tag">Python</span>
+        </div>
+        <p class="project-desc">
+          初対面チームで意見が割れた際、全案の強みを統合して「フォーム解析→AIラケット提案」に昇華。
+          実装では軽量モデルYOLOv8で低遅延処理し、座標データのみをGPT-4oに構造化渡しすることでトークン削減と高精度提案を両立。
+        </p>
+        <div class="project-result">
+          <strong>→ Outcome</strong>
+          チーム統合ファシリテーション＋AI/MLパイプライン設計の両面で貢献。
+        </div>
+      </div>
+    </section>
+
+    <!-- SKILLS -->
+    <section class="section" id="skills">
+      <div class="section-header">
+        <span class="section-icon">./skills</span>
+        <span class="section-title">技術スキル</span>
+      </div>
+
+      <div class="skills-grid">
+        <div class="skill-group">
+          <div class="skill-group-title">Backend / DB</div>
+          <div class="skill-item"><span class="skill-dot"></span>PHP（フルスクラッチ）</div>
+          <div class="skill-item"><span class="skill-dot"></span>MySQL / DB正規化</div>
+          <div class="skill-item"><span class="skill-dot"></span>Java（学習中）</div>
+        </div>
+        <div class="skill-group">
+          <div class="skill-group-title">Frontend</div>
+          <div class="skill-item"><span class="skill-dot"></span>Next.js / React</div>
+          <div class="skill-item"><span class="skill-dot"></span>HTML / CSS</div>
+          <div class="skill-item"><span class="skill-dot"></span>Supabase / Stripe</div>
+        </div>
+        <div class="skill-group">
+          <div class="skill-group-title">Infra / Cloud</div>
+          <div class="skill-item"><span class="skill-dot"></span>Docker</div>
+          <div class="skill-item"><span class="skill-dot"></span>Linux / Apache</div>
+          <div class="skill-item"><span class="skill-dot"></span>GitHub Actions (CI/CD)</div>
+          <div class="skill-item"><span class="skill-dot"></span>Netlify</div>
+        </div>
+        <div class="skill-group">
+          <div class="skill-group-title">AI / ML</div>
+          <div class="skill-item"><span class="skill-dot"></span>YOLOv8（物体検知）</div>
+          <div class="skill-item"><span class="skill-dot"></span>ChatGPT API (gpt-4o)</div>
+          <div class="skill-item"><span class="skill-dot"></span>生成AI活用設計</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- STRENGTHS -->
+    <section class="section" id="strengths">
+      <div class="section-header">
+        <span class="section-icon">./strengths</span>
+        <span class="section-title">強み</span>
+      </div>
+
+      <div class="strengths-grid">
+        <div class="strength-card">
+          <span class="strength-icon">🧠</span>
+          <div class="strength-title">概念思考力</div>
+          <div class="strength-desc">情報を整理して将来を予測し、物事の本質を見抜く力。ワークショップ2連覇の基盤。</div>
+        </div>
+        <div class="strength-card">
+          <span class="strength-icon">⚙️</span>
+          <div class="strength-title">実装力</div>
+          <div class="strength-desc">フルスクラッチ開発でブラックボックスを作らない。根本から深掘りするモグラ型の探究心。</div>
+        </div>
+        <div class="strength-card">
+          <span class="strength-icon">🚀</span>
+          <div class="strength-title">実行力・自走力</div>
+          <div class="strength-desc">現場の課題を自ら発見し、仕組みで解決する。チーム開発での2週間前倒し完成が証明。</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- WORK EXPERIENCE -->
+    <section class="section" id="experience">
+      <div class="section-header">
+        <span class="section-icon">./experience</span>
+        <span class="section-title">現場経験</span>
+      </div>
+
+      <div class="work-item">
+        <div class="work-period">2025.10 – 2025.11</div>
+        <div>
+          <div class="work-name">あたらし屋旅館（おてつたび）</div>
+          <div class="work-desc">繁忙期の清掃・接客業務。指示待ちにならず自ら仕事を見つける自走力を発揮。「業務の飲み込みが早く、自分でできることを積極的に探し実行に移してくれた」と高評価。</div>
+        </div>
+      </div>
+      <div class="work-item">
+        <div class="work-period">2025.05 – 2025.06</div>
+        <div>
+          <div class="work-name">弥陀ヶ原ホテル</div>
+          <div class="work-desc">接客・清掃業務。現場のアナログ課題をITで解決すべき問題として認識する視点を獲得。</div>
+        </div>
+      </div>
+      <div class="work-item">
+        <div class="work-period">2023.12 – 2025.02</div>
+        <div>
+          <div class="work-name">居酒屋 suguru</div>
+          <div class="work-desc">接客スタッフ。現場コミュニケーションと顧客目線のUX感覚を培う。</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- FOOTER -->
+    <div class="footer-bar">
+      <div class="footer-text">© 2026 Shunsuke Kumatsuni · 京都コンピュータ学院 情報科学科</div>
+      <div class="footer-text">github.com/shun-os</div>
+    </div>
+
+  </main>
+</div>
+
+<script src="script.js"></script>
+</body>
+</html>
