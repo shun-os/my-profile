@@ -1,47 +1,59 @@
-// ── Hamburger menu ──
-const hamburger = document.getElementById('hamburger');
-const sidebar   = document.getElementById('sidebar');
-const overlay   = document.getElementById('overlay');
+(function () {
+  var sidebar = document.getElementById('sidebar');
+  var hamburger = document.getElementById('hamburger');
+  var overlay = document.getElementById('overlay');
+  var navItems = document.querySelectorAll('.nav-item');
+  var sections = document.querySelectorAll('.section, .hero');
 
-function openSidebar() {
-  sidebar.classList.add('open');
-  overlay.classList.add('active');
-  hamburger.classList.add('open');
-  hamburger.setAttribute('aria-label', 'メニューを閉じる');
-}
+  function openMenu() {
+    sidebar.classList.add('open');
+    hamburger.classList.add('open');
+    overlay.classList.add('visible');
+  }
 
-function closeSidebar() {
-  sidebar.classList.remove('open');
-  overlay.classList.remove('active');
-  hamburger.classList.remove('open');
-  hamburger.setAttribute('aria-label', 'メニューを開く');
-}
+  function closeMenu() {
+    sidebar.classList.remove('open');
+    hamburger.classList.remove('open');
+    overlay.classList.remove('visible');
+  }
 
-hamburger.addEventListener('click', () => {
-  sidebar.classList.contains('open') ? closeSidebar() : openSidebar();
-});
+  if (hamburger) {
+    hamburger.addEventListener('click', function () {
+      if (sidebar.classList.contains('open')) {
+        closeMenu();
+      } else {
+        openMenu();
+      }
+    });
+  }
 
-overlay.addEventListener('click', closeSidebar);
+  if (overlay) {
+    overlay.addEventListener('click', closeMenu);
+  }
 
-// Close sidebar when a nav link is tapped on mobile
-sidebar.querySelectorAll('.nav-item').forEach(item => {
-  item.addEventListener('click', () => {
-    if (window.innerWidth <= 768) closeSidebar();
+  navItems.forEach(function (item) {
+    item.addEventListener('click', closeMenu);
   });
-});
 
-// ── Scroll spy ──
-const navItems = document.querySelectorAll('.nav-item');
-const sections = document.querySelectorAll('[id]');
+  // Highlight the nav item matching the section in view
+  if ('IntersectionObserver' in window && sections.length) {
+    var observer = new IntersectionObserver(
+      function (entries) {
+        entries.forEach(function (entry) {
+          if (!entry.isIntersecting) return;
+          var id = entry.target.getAttribute('id');
+          if (!id) return;
+          navItems.forEach(function (item) {
+            var match = item.getAttribute('href') === '#' + id;
+            item.classList.toggle('active', match);
+          });
+        });
+      },
+      { rootMargin: '-40% 0px -55% 0px', threshold: 0 }
+    );
 
-const observer = new IntersectionObserver((entries) => {
-  entries.forEach(e => {
-    if (e.isIntersecting) {
-      navItems.forEach(n => {
-        n.classList.toggle('active', n.getAttribute('href') === '#' + e.target.id);
-      });
-    }
-  });
-}, { threshold: 0.3 });
-
-sections.forEach(s => observer.observe(s));
+    sections.forEach(function (section) {
+      if (section.id) observer.observe(section);
+    });
+  }
+})();
