@@ -549,6 +549,86 @@ a.sidebar-link:hover { color: var(--blue); }
   line-height: 1.8;
 }
 
+/* ---------- GITHUB ACTIVITY ---------- */
+.contrib-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border-soft);
+  border-radius: 10px;
+  padding: 20px 22px;
+}
+
+.contrib-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+  flex-wrap: wrap;
+  margin-bottom: 16px;
+  font-family: var(--mono);
+  font-size: 12px;
+}
+
+.contrib-total {
+  color: var(--text-muted);
+}
+
+.contrib-link {
+  color: var(--blue);
+  transition: opacity 0.15s ease;
+}
+.contrib-link:hover { opacity: 0.8; }
+
+.contrib-graph-wrap {
+  overflow-x: auto;
+  padding-bottom: 4px;
+}
+
+.contrib-graph {
+  display: grid;
+  grid-auto-flow: column;
+  grid-template-rows: repeat(7, 1fr);
+  gap: 3px;
+  width: max-content;
+}
+
+.contrib-graph i {
+  width: 10px;
+  height: 10px;
+  border-radius: 2px;
+  background: var(--bg-elevated);
+  border: 1px solid var(--border-soft);
+  font-style: normal;
+}
+
+.contrib-graph i[data-level="1"] { background: rgba(63, 185, 80, 0.25); border-color: transparent; }
+.contrib-graph i[data-level="2"] { background: rgba(63, 185, 80, 0.45); border-color: transparent; }
+.contrib-graph i[data-level="3"] { background: rgba(63, 185, 80, 0.7); border-color: transparent; }
+.contrib-graph i[data-level="4"] { background: var(--green); border-color: transparent; }
+
+.contrib-legend {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  justify-content: flex-end;
+  margin-top: 10px;
+  font-family: var(--mono);
+  font-size: 10.5px;
+  color: var(--text-dim);
+}
+
+.contrib-legend i {
+  width: 10px;
+  height: 10px;
+  border-radius: 2px;
+  display: inline-block;
+  background: var(--bg-elevated);
+  border: 1px solid var(--border-soft);
+}
+.contrib-legend i[data-level="1"] { background: rgba(63, 185, 80, 0.25); border-color: transparent; }
+.contrib-legend i[data-level="2"] { background: rgba(63, 185, 80, 0.45); border-color: transparent; }
+.contrib-legend i[data-level="3"] { background: rgba(63, 185, 80, 0.7); border-color: transparent; }
+.contrib-legend i[data-level="4"] { background: var(--green); border-color: transparent; }
+
 /* ---------- FOOTER ---------- */
 .footer-bar {
   display: flex;
