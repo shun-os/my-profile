@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Lifeline Chart — 熊谷 駿介</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600;700&family=Noto+Sans+JP:wght@300;400;500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div class="life-page">
+  <a class="life-back" href="index.html">&larr; index.html に戻る</a>
+
+  <div class="life-title">./lifeline<span>ライフラインチャート</span></div>
+  <p class="life-lead">パスワードを知っている人だけが見られる、年齢ごとの指数の記録です。</p>
+
+  <div class="life-lock-card" id="lock-card">
+    <div class="life-lock-icon">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor"><path d="M12 1a5 5 0 00-5 5v3H6a2 2 0 00-2 2v9a2 2 0 002 2h12a2 2 0 002-2v-9a2 2 0 00-2-2h-1V6a5 5 0 00-5-5zm0 2a3 3 0 013 3v3H9V6a3 3 0 013-3zm0 10a2 2 0 110 4 2 2 0 010-4z"/></svg>
+    </div>
+    <form class="life-form" id="lock-form">
+      <input class="life-input" id="password-input" type="password" placeholder="password" autocomplete="off" autofocus>
+      <button class="life-submit" type="submit" id="submit-btn">Unlock</button>
+    </form>
+    <div class="life-error" id="error-msg" hidden></div>
+  </div>
+
+  <div id="chart-area" hidden></div>
+</div>
+
+<script>
+(function () {
+  var lockCard = document.getElementById('lock-card');
+  var form = document.getElementById('lock-form');
+  var input = document.getElementById('password-input');
+  var submitBtn = document.getElementById('submit-btn');
+  var errorMsg = document.getElementById('error-msg');
+  var chartArea = document.getElementById('chart-area');
+
+  var STAGE_COLORS = {
+    '保育園/幼稚園': 'rgba(63, 185, 80, 0.10)',
+    '小学生': 'rgba(88, 166, 255, 0.10)',
+    '中学生': 'rgba(210, 153, 34, 0.12)',
+    '高校生': 'rgba(63, 185, 80, 0.10)',
+    '大学生': 'rgba(88, 166, 255, 0.10)'
+  };
+  var STAGE_ORDER = ['保育園/幼稚園', '小学生', '中学生', '高校生', '大学生'];
+
+  form.addEventListener('submit', function (e) {
+    e.preventDefault();
+    var password = input.value;
+    if (!password) return;
+
+    submitBtn.disabled = true;
+    errorMsg.hidden = true;
+
+    fetch('/.netlify/functions/lifeline', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ password: password })
+    })
+      .then(function (res) {
+        if (!res.ok) throw new Error('unauthorized');
+        return res.json();
+      })
+      .then(function (json) {
+        renderChart(json.data || []);
+        lockCard.hidden = true;
+        chartArea.hidden = false;
+      })
+      .catch(function () {
+        errorMsg.textContent = 'パスワードが違います。';
+        errorMsg.hidden = false;
+      })
+      .finally(function () {
+        submitBtn.disabled = false;
+      });
+  });
+
+  function renderChart(points) {
+    if (!points.length) {
+      chartArea.innerHTML = '<div class="life-chart-card">データがありません。</div>';
+      return;
+    }
+
+    var maxAge = Math.max.apply(null, points.map(function (p) { return p.age; }));
+    var minAge = Math.min.apply(null, points.map(function (p) { return p.age; }));
+    var w = 900;
+    var h = 320;
+    var padL = 32;
+    var padR = 16;
+    var padT = 20;
+    var padB = 34;
+    var plotW = w - padL - padR;
+    var plotH = h - padT - padB;
+
+    function x(age) { return padL + ((age - minAge) / (maxAge - minAge)) * plotW; }
+    function y(val) { return padT + plotH - (val / 10) * plotH; }
+
+    // stage bands (forward-filled)
+    var bands = [];
+    var current = null;
+    points.forEach(function (p) {
+      var stage = p.stage || (current ? current.stage : null);
+      if (!current || current.stage !== stage) {
+        if (current) bands.push(current);
+        current = { stage: stage, start: p.age, end: p.age };
+      } else {
+        current.end = p.age;
+      }
+    });
+    if (current) bands.push(current);
+
+    var bandsSvg = bands
+      .filter(function (b) { return b.stage; })
+      .map(function (b) {
+        var x1 = x(b.start) - (plotW / (maxAge - minAge)) / 2;
+        var x2 = x(b.end) + (plotW / (maxAge - minAge)) / 2;
+        var color = STAGE_COLORS[b.stage] || 'rgba(139, 148, 158, 0.08)';
+        return '<rect x="' + x1 + '" y="' + padT + '" width="' + (x2 - x1) + '" height="' + plotH + '" fill="' + color + '"></rect>' +
+          '<text class="life-band-label" x="' + ((x1 + x2) / 2) + '" y="' + (padT + 12) + '" text-anchor="middle">' + b.stage + '</text>';
+      })
+      .join('');
+
+    var gridSvg = [0, 2, 4, 6, 8, 10].map(function (v) {
+      return '<line x1="' + padL + '" y1="' + y(v) + '" x2="' + (w - padR) + '" y2="' + y(v) + '" stroke="var(--border-soft)" stroke-width="1"></line>' +
+        '<text class="life-axis-label" x="4" y="' + (y(v) + 3) + '">' + v + '</text>';
+    }).join('');
+
+    var axisSvg = points
+      .filter(function (p) { return p.age % 2 === 0; })
+      .map(function (p) {
+        return '<text class="life-axis-label" x="' + x(p.age) + '" y="' + (h - 10) + '" text-anchor="middle">' + p.age + '</text>';
+      })
+      .join('');
+
+    var lineSvg = '<polyline class="life-line" points="' +
+      points.map(function (p) { return x(p.age) + ',' + y(p.index); }).join(' ') +
+      '"></polyline>';
+
+    var pointsSvg = points.map(function (p) {
+      var title = p.age + '歳（' + p.year + '年）指数' + p.index + (p.memo ? '：' + p.memo : '');
+      return '<circle class="life-point" cx="' + x(p.age) + '" cy="' + y(p.index) + '" r="3.5"><title>' + escapeHtml(title) + '</title></circle>';
+    }).join('');
+
+    var legendSvg = STAGE_ORDER
+      .filter(function (s) { return bands.some(function (b) { return b.stage === s; }); })
+      .map(function (s) {
+        return '<div class="life-legend-item"><span class="life-legend-swatch" style="background:' + STAGE_COLORS[s] + '"></span>' + s + '</div>';
+      })
+      .join('');
+
+    var eventsHtml = points
+      .filter(function (p) { return p.memo; })
+      .map(function (p) {
+        return '<div class="life-event"><div class="life-event-age">' + p.age + '歳 / ' + p.year + '</div><div class="life-event-memo">' + escapeHtml(p.memo) + '（指数' + p.index + '）</div></div>';
+      })
+      .join('');
+
+    chartArea.innerHTML =
+      '<div class="life-chart-card">' +
+        '<div class="life-svg-wrap">' +
+          '<svg viewBox="0 0 ' + w + ' ' + h + '" width="100%" height="' + h + '">' +
+            bandsSvg + gridSvg + lineSvg + pointsSvg + axisSvg +
+          '</svg>' +
+        '</div>' +
+        '<div class="life-legend">' + legendSvg + '</div>' +
+      '</div>' +
+      '<div class="life-events">' + eventsHtml + '</div>';
+  }
+
+  function escapeHtml(str) {
+    var div = document.createElement('div');
+    div.textContent = str;
+    return div.innerHTML;
+  }
+})();
+</script>
+
+</body>
+</html>
