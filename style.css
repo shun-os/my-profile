@@ -693,8 +693,11 @@ a.sidebar-link:hover { color: var(--blue); }
   color: var(--text-dim);
 }
 
+.term-form { display: flex; flex-direction: column; gap: 16px; }
+label.term { display: block; cursor: text; }
+
 .term-body {
-  padding: 22px 24px 24px;
+  padding: 18px 22px 20px;
   font-family: var(--mono);
   font-size: 13.5px;
 }
@@ -704,7 +707,6 @@ a.sidebar-link:hover { color: var(--blue); }
 .term-cmd { color: var(--blue); }
 .hidden-field { display: none; }
 
-.term-field { display: block; margin-top: 18px; }
 .term-label { display: block; margin-bottom: 6px; color: var(--text-muted); }
 
 .term-input {
@@ -722,6 +724,7 @@ a.sidebar-link:hover { color: var(--blue); }
   transition: border-color 0.15s ease, box-shadow 0.15s ease;
 }
 .term-input::placeholder { color: var(--text-dim); }
+label.term:focus-within { border-color: rgba(63, 185, 80, 0.5); }
 .term-input:focus {
   outline: none;
   border-color: var(--green);
@@ -733,7 +736,6 @@ a.sidebar-link:hover { color: var(--blue); }
   align-items: center;
   flex-wrap: wrap;
   gap: 16px;
-  margin-top: 20px;
 }
 .term-submit {
   background: var(--green-dim);
