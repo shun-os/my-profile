@@ -41,6 +41,7 @@
       <a class="nav-item" href="#experience"><span class="nav-dot"></span>Experience</a>
       <a class="nav-item" href="#activity"><span class="nav-dot"></span>Activity</a>
       <a class="nav-item" href="#goals"><span class="nav-dot"></span>Next Goals</a>
+      <a class="nav-item" href="#contact"><span class="nav-dot"></span>Contact</a>
 
       <div class="nav-label">Info</div>
       <a class="nav-item" href="#about"><span class="nav-dot"></span>About</a>
@@ -407,18 +408,41 @@
       </div>
     </section>
 
+    <!-- CONTACT -->
     <section class="section" id="contact">
-  <div class="section-header">
-    <span class="section-icon">./contact</span>
-    <span class="section-title">お問い合わせ</span>
-  </div>
-  <form name="contact" method="POST" data-netlify="true">
-    <input type="hidden" name="form-name" value="contact">
-    <p><input type="email" name="email" placeholder="メールアドレス" required></p>
-    <p><textarea name="message" placeholder="メッセージ" required></textarea></p>
-    <button type="submit">送信</button>
-  </form>
-</section>
+      <div class="section-header">
+        <span class="section-icon">./contact</span>
+        <span class="section-title">お問い合わせ</span>
+      </div>
+
+      <div class="term">
+        <div class="term-bar">
+          <span class="term-dot r"></span><span class="term-dot y"></span><span class="term-dot g"></span>
+          <span class="term-name">contact.sh — shun-os</span>
+        </div>
+        <form class="term-body" id="contact-form" name="contact" method="POST" action="/" data-netlify="true" netlify-honeypot="bot-field">
+          <input type="hidden" name="form-name" value="contact">
+          <p class="hidden-field"><label>Don't fill this out: <input name="bot-field"></label></p>
+
+          <p class="term-line"><span class="term-prompt">$</span> <span class="term-cmd">./contact.sh</span> <span class="term-muted">--to shunsuke</span></p>
+          <p class="term-line term-muted"># お仕事のご相談・インターンのご連絡などお気軽にどうぞ</p>
+
+          <label class="term-field">
+            <span class="term-label"><span class="term-prompt">&gt;</span> email</span>
+            <input class="term-input" type="email" name="email" placeholder="you@example.com" autocomplete="email" required>
+          </label>
+          <label class="term-field">
+            <span class="term-label"><span class="term-prompt">&gt;</span> message</span>
+            <textarea class="term-input" name="message" rows="5" placeholder="メッセージを入力..." required></textarea>
+          </label>
+
+          <div class="term-actions">
+            <button class="term-submit" type="submit">$ ./send<span class="cursor"></span></button>
+            <span class="term-status" id="contact-status" role="status" aria-live="polite"></span>
+          </div>
+        </form>
+      </div>
+    </section>
 
     <!-- FOOTER -->
     <div class="footer-bar">

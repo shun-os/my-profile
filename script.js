@@ -90,4 +90,35 @@
         graphEl.innerHTML = '<img src="https://ghchart.rshah.org/3fb950/' + GITHUB_USER + '" alt="GitHub contributions" style="width:100%;border-radius:4px;">';
       });
   }
+  // Contact form (Netlify Forms via fetch)
+  var form = document.getElementById('contact-form');
+  var statusEl = document.getElementById('contact-status');
+
+  if (form && statusEl) {
+    form.addEventListener('submit', function (e) {
+      e.preventDefault();
+      var btn = form.querySelector('.term-submit');
+      btn.disabled = true;
+      statusEl.className = 'term-status';
+      statusEl.textContent = 'sending...';
+
+      var body = new URLSearchParams(new FormData(form)).toString();
+      fetch('/', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+        body: body
+      })
+        .then(function (res) {
+          if (!res.ok) throw new Error('failed');
+          form.reset();
+          statusEl.className = 'term-status ok';
+          statusEl.textContent = '✔ exit 0 — 送信しました。ありがとうございます!';
+        })
+        .catch(function () {
+          statusEl.className = 'term-status err';
+          statusEl.textContent = '✖ exit 1 — 送信に失敗しました。時間をおいてお試しください。';
+        })
+        .then(function () { btn.disabled = false; });
+    });
+  }
 })();

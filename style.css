@@ -665,6 +665,93 @@ a.sidebar-link:hover { color: var(--blue); }
   color: var(--text-dim);
 }
 
+/* ---------- CONTACT (terminal form) ---------- */
+.term {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  overflow: hidden;
+  box-shadow: 0 0 0 1px rgba(63, 185, 80, 0.04), 0 12px 32px rgba(0, 0, 0, 0.35);
+}
+
+.term-bar {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  padding: 10px 14px;
+  background: var(--bg-elevated);
+  border-bottom: 1px solid var(--border-soft);
+}
+.term-dot { width: 11px; height: 11px; border-radius: 50%; }
+.term-dot.r { background: #f85149; }
+.term-dot.y { background: var(--orange); }
+.term-dot.g { background: var(--green); }
+.term-name {
+  margin-left: 8px;
+  font-family: var(--mono);
+  font-size: 12px;
+  color: var(--text-dim);
+}
+
+.term-body {
+  padding: 22px 24px 24px;
+  font-family: var(--mono);
+  font-size: 13.5px;
+}
+.term-line { margin: 0 0 6px; }
+.term-muted { color: var(--text-dim); }
+.term-prompt { color: var(--green); }
+.term-cmd { color: var(--blue); }
+.hidden-field { display: none; }
+
+.term-field { display: block; margin-top: 18px; }
+.term-label { display: block; margin-bottom: 6px; color: var(--text-muted); }
+
+.term-input {
+  display: block;
+  width: 100%;
+  background: var(--bg);
+  border: 1px solid var(--border);
+  border-left: 3px solid var(--border);
+  border-radius: var(--radius);
+  color: var(--text);
+  font-family: var(--mono);
+  font-size: 13.5px;
+  padding: 10px 12px;
+  resize: vertical;
+  transition: border-color 0.15s ease, box-shadow 0.15s ease;
+}
+.term-input::placeholder { color: var(--text-dim); }
+.term-input:focus {
+  outline: none;
+  border-color: var(--green);
+  box-shadow: 0 0 0 3px var(--green-dim);
+}
+
+.term-actions {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 16px;
+  margin-top: 20px;
+}
+.term-submit {
+  background: var(--green-dim);
+  border: 1px solid rgba(63, 185, 80, 0.4);
+  border-radius: var(--radius);
+  color: var(--green);
+  font-family: var(--mono);
+  font-size: 13.5px;
+  padding: 10px 20px;
+  cursor: pointer;
+  transition: background 0.15s ease, transform 0.15s ease;
+}
+.term-submit:hover { background: rgba(63, 185, 80, 0.22); transform: translateY(-1px); }
+.term-submit:disabled { opacity: 0.5; cursor: default; transform: none; }
+.term-status { font-size: 12.5px; }
+.term-status.ok { color: var(--green); }
+.term-status.err { color: #f85149; }
+
 /* ---------- RESPONSIVE ---------- */
 @media (max-width: 900px) {
   .mobile-header { display: flex; }
