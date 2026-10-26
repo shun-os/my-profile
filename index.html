@@ -4,477 +4,375 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Portfolio — 熊谷 駿介</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600;700&family=Noto+Sans+JP:wght@300;400;500;700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="style.css">
+<script>
+  // JSが動く環境だけデスクトップ表示に切り替える。読み込み失敗時は読み物表示に戻す。
+  document.documentElement.className += ' js';
+  setTimeout(function () {
+    if (!window.__macBooted) document.documentElement.className = document.documentElement.className.replace(/\bjs\b/, '');
+  }, 4000);
+</script>
+<link rel="stylesheet" href="mac.css">
 </head>
 <body>
 
-<!-- MOBILE HEADER -->
-<header class="mobile-header">
-  <span class="mobile-name">kumatani shunsuke</span>
-  <div class="mobile-right">
-    <div class="mobile-avatar">SK<img src="profile.jpg" alt="熊谷 駿介" onerror="this.remove()"></div>
-    <button class="hamburger" id="hamburger" aria-label="メニューを開く">
-      <span></span>
-      <span></span>
-      <span></span>
-    </button>
-  </div>
-</header>
+<!--
+  中身はすべてここに直接書いてあります（JSなし・検索エンジン向け）。
+  JSが動くと mac.js がこれらを各ウィンドウへ移して、デスクトップとして表示します。
+  data-title = ウィンドウ名 / data-label = アイコン名 / data-icon = アイコンの絵 / data-w,data-h = 初期サイズ
+-->
+<main id="content" class="doc-stack">
 
-<!-- OVERLAY -->
-<div class="overlay" id="overlay"></div>
-
-<div class="layout">
-
-  <!-- SIDEBAR -->
-  <aside class="sidebar" id="sidebar">
-    <div class="sidebar-profile">
-      <div class="sidebar-avatar">SK<img src="profile.jpg" alt="熊谷 駿介" onerror="this.remove()"></div>
-      <div class="sidebar-name">kumatani shunsuke</div>
-      <div class="sidebar-role">Web Engineer / Student</div>
-    </div>
-
-    <nav class="sidebar-nav">
-      <div class="nav-label">Navigation</div>
-      <a class="nav-item active" href="#projects"><span class="nav-dot"></span>Projects</a>
-      <a class="nav-item" href="#skills"><span class="nav-dot"></span>Skills</a>
-      <a class="nav-item" href="#strengths"><span class="nav-dot"></span>Strengths</a>
-      <a class="nav-item" href="#experience"><span class="nav-dot"></span>Experience</a>
-      <a class="nav-item" href="#activity"><span class="nav-dot"></span>Activity</a>
-      <a class="nav-item" href="#goals"><span class="nav-dot"></span>Next Goals</a>
-      <a class="nav-item" href="#contact"><span class="nav-dot"></span>Contact</a>
-
-      <div class="nav-label">Info</div>
-      <a class="nav-item" href="#about"><span class="nav-dot"></span>About</a>
+  <header class="nojs-head">
+    <p class="nojs-head-title">Shunsuke's Macintosh</p>
+    <nav class="nojs-nav" aria-label="目次">
+      <a href="#about">profile.md</a>
+      <a href="#projects">Projects</a>
+      <a href="#skills">Skills</a>
+      <a href="#strengths">Strengths</a>
+      <a href="#experience">Experience</a>
+      <a href="#activity">GitHub Activity</a>
+      <a href="#goals">Next Goals</a>
+      <a href="#contact">contact.sh</a>
     </nav>
+  </header>
 
-    <div class="sidebar-links">
-      <div class="sidebar-link-row">
-        <a class="lock-icon" href="life.html" title="Lifeline Chart" aria-label="Lifeline Chart（要パスワード）">
-          <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor"><path d="M12 1a5 5 0 00-5 5v3H6a2 2 0 00-2 2v9a2 2 0 002 2h12a2 2 0 002-2v-9a2 2 0 00-2-2h-1V6a5 5 0 00-5-5zm0 2a3 3 0 013 3v3H9V6a3 3 0 013-3zm0 10a2 2 0 110 4 2 2 0 010-4z"/></svg>
-        </a>
-        <a class="sidebar-link" href="https://github.com/shun-os" target="_blank">
-          <svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/></svg>
-          github.com/shun-os
-        </a>
-      </div>
-      <a class="sidebar-link" href="https://instagram.com/shun_234312" target="_blank">
-        <svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zm0 10.162a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/></svg>
-        instagram.com/shun_234312
-      </a>
-      <a class="sidebar-link" href="https://connpass.com/user/shun-os/" target="_blank" rel="noopener">
-        <svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor"><path d="M19 4h-1V2h-2v2H8V2H6v2H5c-1.11 0-1.99.9-1.99 2L3 20c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 16H5V9h14v11z"/></svg>
-        connpass.com/user/shun-os
-      </a>
-      <div class="sidebar-link" style="color:var(--text-muted); cursor:default;">
-        <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></svg>
-        情報系専門学校
-      </div>
-      <div class="sidebar-link" style="color:var(--text-muted); cursor:default;">
-        <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor"><path d="M19 4h-1V2h-2v2H8V2H6v2H5c-1.11 0-1.99.9-1.99 2L3 20c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 16H5V9h14v11z"/></svg>
-        卒業予定 2028年3月
+  <!-- PROFILE -->
+  <article class="doc doc-profile" id="about" data-win="profile" data-title="profile.md" data-label="profile.md" data-icon="doc" data-w="500" data-h="470">
+    <h2 class="doc-head">profile.md</h2>
+
+    <div class="profile-card">
+      <div class="avatar">SK<img src="profile.jpg" alt="熊谷 駿介" width="120" height="120" onerror="this.remove()"></div>
+      <div>
+        <div class="profile-name">kumatani shunsuke</div>
+        <div class="profile-role">Web Engineer / Student</div>
       </div>
     </div>
-  </aside>
 
-  <!-- MAIN CONTENT -->
-  <main class="main">
+    <p class="prompt">cat profile.md<span class="cursor"></span></p>
+    <h1 class="hero-name">熊谷 <span>駿介</span></h1>
+    <p class="hero-yomi">Kumatani Shunsuke</p>
+    <p class="hero-subtitle">
+      「思考力（AI）・実装力（IT）・現場力（旅館）」の3軸で課題解決に取り組む、<br>
+      指揮官型エンジニアを目指す学生エンジニア。<br>
+      ビジネス構想からフルスクラッチ実装まで一貫して担える人材を目指しています。
+    </p>
+    <div class="tags">
+      <span class="tag">PHP / MySQL</span>
+      <span class="tag">Next.js / Supabase</span>
+      <span class="tag">Docker / Linux</span>
+      <span class="tag">GitHub Actions</span>
+      <span class="tag">YOLOv8 / GPT-4o</span>
+    </div>
+    <div class="tags">
+      <span class="tag tag-award">生成AIワークショップ 最優秀賞（2023・2024）</span>
+    </div>
 
-    <!-- HERO -->
-    <div class="hero" id="about">
-      <div class="hero-prompt">cat profile.md<span class="cursor"></span></div>
-      <div class="hero-name">熊谷 <span>駿介</span></div>
-      <div class="hero-yomi">Kumatani Shunsuke</div>
-      <p class="hero-subtitle">
-        「思考力（AI）・実装力（IT）・現場力（旅館）」の3軸で課題解決に取り組む、<br>
-        指揮官型エンジニアを目指す学生エンジニア。<br>
-        ビジネス構想からフルスクラッチ実装まで一貫して担える人材を目指しています。
+    <h3 class="sub-head">Links</h3>
+    <ul class="link-list">
+      <li><a href="https://github.com/shun-os" target="_blank" rel="noopener">github.com/shun-os</a></li>
+      <li><a href="https://instagram.com/shun_234312" target="_blank" rel="noopener">instagram.com/shun_234312</a></li>
+      <li><a href="https://connpass.com/user/shun-os/" target="_blank" rel="noopener">connpass.com/user/shun-os</a></li>
+      <li><a href="life.html" title="Lifeline Chart" aria-label="Lifeline Chart（要パスワード）">🔒 Lifeline Chart（要パスワード）</a></li>
+      <li class="muted">情報系専門学校</li>
+      <li class="muted">卒業予定 2028年3月</li>
+    </ul>
+
+    <footer class="doc-foot">
+      <div>© 2026 Shunsuke Kumatani · 専門学校 情報科学科</div>
+      <div>github.com/shun-os</div>
+    </footer>
+  </article>
+
+  <!-- PROJECTS -->
+  <section class="doc-group" id="projects" data-win="projects" data-title="Projects" data-label="Projects" data-icon="folder">
+    <h2 class="doc-head">Projects <span class="doc-head-sub">開発実績</span></h2>
+
+    <!-- Project 1 -->
+    <article class="doc project" id="project-rentacar" data-title="Rentacar System" data-label="Rentacar System" data-icon="doc" data-w="480" data-h="440">
+      <p class="project-num">01 / SOLO DEV</p>
+      <h3 class="project-title">レンタカー予約管理システム（地方事業者向け）</h3>
+      <p class="project-period">2026.04 〜 2026.06 <span class="badge">Live</span></p>
+      <div class="tags">
+        <span class="tag">HTML / CSS / JS</span>
+        <span class="tag">Next.js / TypeScript</span>
+        <span class="tag">Supabase</span>
+        <span class="tag">Netlify</span>
+      </div>
+      <p class="project-desc">
+        地方の実在事業者向けに、予約管理システムを企画から実装・公開まで一人で構築。ユーザー側はバニラJS（カレンダー日程選択・車両選択・申込フォーム・料金シミュレーター）、管理者側はNext.js + Supabase Authでログイン保護された管理画面を実装。2層構成（静的HTML + Next.js）にすることで、表示速度と管理機能を両立。
       </p>
-      <div class="hero-tags">
-        <span class="tag blue">PHP / MySQL</span>
-        <span class="tag blue">Next.js / Supabase</span>
-        <span class="tag blue">Docker / Linux</span>
-        <span class="tag blue">GitHub Actions</span>
-        <span class="tag green">YOLOv8 / GPT-4o</span>
-        <span class="tag green">Stripe</span>
+      <p class="project-result"><strong>→ Outcome</strong>
+        本番公開済み。現場スタッフがITに不慣れでも使える管理UI設計と、予約データのリアルタイム同期（Supabase）を実現。
+      </p>
+      <p class="btn-row">
+        <a class="btn" href="https://kuma-rental.netlify.app/user/index.html" target="_blank" rel="noopener">Live Site</a>
+        <a class="btn" href="https://github.com/shun-os/Rentacar-Site-Open" target="_blank" rel="noopener">Source</a>
+      </p>
+    </article>
+
+    <!-- Project 2 -->
+    <article class="doc project" id="project-collage" data-title="Kantan Collage" data-label="Kantan Collage" data-icon="doc" data-w="480" data-h="420">
+      <p class="project-num">02 / WEB TOOL</p>
+      <h3 class="project-title">かんたんコラージュ（写真加工Webアプリ）</h3>
+      <p class="project-period"><span class="badge">Live</span></p>
+      <div class="tags">
+        <span class="tag">JavaScript</span>
+        <span class="tag">Canvas</span>
+        <span class="tag">React + Vite</span>
+        <span class="tag">Netlify</span>
       </div>
-      <div class="hero-tags">
-        <span class="tag orange">生成AIワークショップ 最優秀賞（2023・2024）</span>
+      <p class="project-desc">
+        写真を端末内だけで加工する公開Webアプリ。2〜9枚の「コラージュ」と、Instagram用の「グリッド分割」を提供。
+        React + Vite で構築し、ドラッグ・ピンチ・Undo/Redoまで自前で実装。テスト失敗時にデプロイを止める仕組みやCSP・SEO対策も整備。
+      </p>
+      <p class="project-result"><strong>→ Outcome</strong>
+        公開・運用中。技育展2026 書類審査通過。企画から実装、デプロイ、SEOまで一人で一貫して担当。
+      </p>
+      <p class="btn-row">
+        <a class="btn" href="https://kantan-collage.com/" target="_blank" rel="noopener">Live Site</a>
+      </p>
+    </article>
+
+    <!-- Project 3 -->
+    <article class="doc project" id="project-journally" data-title="Journally" data-label="Journally" data-icon="doc" data-w="460" data-h="340">
+      <p class="project-num">03 / INTERNSHIP</p>
+      <h3 class="project-title">Journally（インターン・チーム開発）</h3>
+      <p class="project-period">2026.08.10 – 2026.09.06 <span class="badge">Internship</span></p>
+      <div class="tags">
+        <span class="tag">Ruby on Rails</span>
+        <span class="tag">Vue</span>
+      </div>
+      <p class="project-desc">
+        インターンでRails + Vue構成のチーム開発に参加。約4週間、チームリーダーとして開発の中心を担い、機能追加の方針をチームで話し合って決めた。コミット数はチーム最多の38。
+      </p>
+      <p class="project-result"><strong>→ Outcome</strong>
+        実務に近いチーム開発のフローで、リーダーとして機能追加の話し合いを進めつつ、開発の中心として継続的に実装へ貢献。
+      </p>
+    </article>
+
+    <!-- Project 4 -->
+    <article class="doc project" id="project-teamweb" data-title="Team Web App" data-label="Team Web App" data-icon="doc" data-w="460" data-h="360">
+      <p class="project-num">04 / TEAM DEV</p>
+      <h3 class="project-title">Webアプリケーション（チーム開発）</h3>
+      <p class="project-period">4名チーム <span class="badge">Backend + Infra</span></p>
+      <div class="tags">
+        <span class="tag">PHP</span>
+        <span class="tag">MySQL</span>
+        <span class="tag">Docker</span>
+        <span class="tag">Linux</span>
+        <span class="tag">GitHub Actions</span>
+      </div>
+      <p class="project-desc">
+        4名チームのバックエンド・インフラ担当として実装。API仕様の言語化とレビュー体制の整備で、進捗遅延を仕組みから解決。
+      </p>
+      <p class="project-result"><strong>→ Outcome</strong>
+        API仕様の言語化とレビュー体制の整備により、チームの進捗遅延を解消。
+      </p>
+    </article>
+
+    <!-- Project 5 -->
+    <article class="doc project" id="project-sportsai" data-title="Sports AI" data-label="Sports AI" data-icon="doc" data-w="480" data-h="400">
+      <p class="project-num">05 / HACKATHON</p>
+      <h3 class="project-title">スポーツ用品提案AIシステム（Bluvicハッカソン）</h3>
+      <p class="project-period">2026.05 <span class="badge">Hackathon</span></p>
+      <div class="tags">
+        <span class="tag">YOLOv8</span>
+        <span class="tag">ChatGPT API (gpt-4o)</span>
+        <span class="tag">Python</span>
+      </div>
+      <p class="project-desc">
+        初対面チームで意見が割れた際、全案の強みを統合して「フォーム解析→AIラケット提案」に昇華。
+        実装では軽量モデルYOLOv8で低遅延処理し、座標データのみをGPT-4oに構造化渡しすることでトークン削減と高精度提案を両立。
+      </p>
+      <p class="project-result"><strong>→ Outcome</strong>
+        チーム統合ファシリテーション＋AI/MLパイプライン設計の両面で貢献。
+      </p>
+    </article>
+
+    <!-- Project 6 -->
+    <article class="doc project" id="project-workshop" data-title="GenAI Workshop" data-label="GenAI Workshop" data-icon="doc" data-w="480" data-h="400">
+      <p class="project-num">06 / WORKSHOP</p>
+      <h3 class="project-title">産学連携「生成AIワークショップ」新規事業構想</h3>
+      <p class="project-period">2023.06 / 2024.11 <span class="badge">最優秀賞 ×2</span></p>
+      <p class="project-desc">
+        IT企業との合同ワークショップで、AIを活用したビジネスモデルを提案。
+        2023年は観光×メタバース「MetaRide Kyoto」で全チーム中1位を獲得。2024年は物流2024年問題に対するAR教育システムを企画し、6チーム中1位（最優秀賞）を獲得（各チームが異なるテーマで提案する形式）。
+      </p>
+      <p class="project-result"><strong>→ Outcome</strong>
+        対立意見の強みを掛け合わせて統合する構想力と、ビジネス文脈での技術提案力を評価され受賞。
+      </p>
+    </article>
+  </section>
+
+  <!-- SKILLS -->
+  <article class="doc" id="skills" data-win="skills" data-title="Skills" data-label="Skills" data-icon="doc" data-w="520" data-h="420">
+    <h2 class="doc-head">Skills <span class="doc-head-sub">技術スキル</span></h2>
+    <div class="skills-grid">
+      <div class="skill-group">
+        <h3 class="skill-group-title">Backend / DB</h3>
+        <ul>
+          <li>PHP（フルスクラッチ）</li>
+          <li>MySQL / DB正規化</li>
+          <li>Supabase</li>
+          <li>Ruby on Rails（インターンで実務使用）</li>
+          <li>Java（課題で認証・DI・REST を実装）</li>
+        </ul>
+      </div>
+      <div class="skill-group">
+        <h3 class="skill-group-title">Frontend</h3>
+        <ul>
+          <li>Next.js / React</li>
+          <li>TypeScript（Next.jsで使用）</li>
+          <li>Vue（インターンで実務使用）</li>
+          <li>HTML / CSS</li>
+        </ul>
+      </div>
+      <div class="skill-group">
+        <h3 class="skill-group-title">Infra / Cloud</h3>
+        <ul>
+          <li>Docker</li>
+          <li>Linux / Apache</li>
+          <li>GitHub Actions (CI/CD)</li>
+          <li>Netlify</li>
+        </ul>
+      </div>
+      <div class="skill-group">
+        <h3 class="skill-group-title">AI / ML</h3>
+        <ul>
+          <li>YOLOv8（物体検知）</li>
+          <li>ChatGPT API (gpt-4o)</li>
+          <li>Python（ハッカソンで使用）</li>
+          <li>生成AI活用設計</li>
+          <li>Claude Code / Claude API（個人開発で活用）</li>
+        </ul>
+      </div>
+      <div class="skill-group">
+        <h3 class="skill-group-title">少し触れた技術</h3>
+        <ul>
+          <li>Go</li>
+          <li>Swift / iOS</li>
+          <li>LangChain / Bedrock</li>
+        </ul>
       </div>
     </div>
+  </article>
 
-    <!-- PROJECTS -->
-    <section class="section" id="projects">
-      <div class="section-header">
-        <span class="section-icon">./projects</span>
-        <span class="section-title">開発実績</span>
+  <!-- STRENGTHS -->
+  <article class="doc" id="strengths" data-win="strengths" data-title="Strengths" data-label="Strengths" data-icon="doc" data-w="480" data-h="380">
+    <h2 class="doc-head">Strengths <span class="doc-head-sub">強み</span></h2>
+    <div class="cards">
+      <div class="card">
+        <span class="card-icon" aria-hidden="true">🧠</span>
+        <h3 class="card-title">概念思考力</h3>
+        <p class="card-desc">情報を整理して将来を予測し、物事の本質を見抜く力。ワークショップ2連覇の基盤。</p>
       </div>
-
-      <!-- Project 1 -->
-      <div class="project-card">
-        <div class="project-header">
-          <div>
-            <div class="project-num">01 / SOLO DEV</div>
-            <div class="project-title">レンタカー予約管理システム（地方事業者向け）</div>
-            <div class="project-period">2026.04 〜 2026.06</div>
-          </div>
-          <span class="project-badge">Live</span>
-        </div>
-        <div class="project-links">
-          <a class="project-link" href="https://github.com/shun-os/Rentacar-Site-Open" target="_blank" rel="noopener">
-            <svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/></svg>
-            Source
-          </a>
-          <a class="project-link" href="https://kuma-rental.netlify.app/user/index.html" target="_blank" rel="noopener">
-            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6"/><path d="M15 3h6v6"/><path d="M10 14L21 3"/></svg>
-            Live Site
-          </a>
-        </div>
-        <div class="project-tech">
-          <span class="tech-tag">HTML / CSS / JS</span>
-          <span class="tech-tag">Next.js / TypeScript</span>
-          <span class="tech-tag">Supabase</span>
-          <span class="tech-tag">Netlify</span>
-        </div>
-        <p class="project-desc">
-          地方の実在事業者向けに、フルスクラッチで予約管理システムを構築。ユーザー側はバニラJS（カレンダー日程選択・車両選択・申込フォーム・料金シミュレーター）、管理者側はNext.js + Supabase Authでログイン保護された管理画面を実装。2層構成（静的HTML + Next.js）にすることで、表示速度と管理機能を両立。
-        </p>
-        <div class="project-result">
-          <strong>→ Outcome</strong>
-          本番公開済み。現場スタッフがITに不慣れでも使える管理UI設計と、予約データのリアルタイム同期（Supabase）を実現。
-        </div>
+      <div class="card">
+        <span class="card-icon" aria-hidden="true">⚙️</span>
+        <h3 class="card-title">実装力</h3>
+        <p class="card-desc">フルスクラッチ開発でブラックボックスを作らない。根本から深掘りするモグラ型の探究心。</p>
       </div>
-
-      <!-- Project 2 -->
-      <div class="project-card">
-        <div class="project-header">
-          <div>
-            <div class="project-num">02 / WEB TOOL</div>
-            <div class="project-title">かんたんコラージュ（写真加工Webアプリ）</div>
-          </div>
-          <span class="project-badge">Live</span>
-        </div>
-        <div class="project-links">
-          <a class="project-link" href="https://kantan-collage.com/" target="_blank" rel="noopener">
-            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6"/><path d="M15 3h6v6"/><path d="M10 14L21 3"/></svg>
-            Live Site
-          </a>
-        </div>
-        <div class="project-tech">
-          <span class="tech-tag">JavaScript</span>
-          <span class="tech-tag">Canvas</span>
-          <span class="tech-tag">React + Vite</span>
-          <span class="tech-tag">Netlify</span>
-        </div>
-        <p class="project-desc">
-          写真を端末内だけで加工する公開Webアプリ。2〜9枚の「コラージュ」と、Instagram用の「グリッド分割」を提供。
-          フレームワークなしのJavaScriptでドラッグ・ピンチ・Undo/Redoまで自前実装し、テスト失敗時にデプロイを止める仕組みやCSP・SEO対策も整備。
-        </p>
-        <div class="project-result">
-          <strong>→ Outcome</strong>
-          公開・運用中。企画から実装、デプロイ、SEOまで一人で一貫して担当。
-        </div>
+      <div class="card">
+        <span class="card-icon" aria-hidden="true">🚀</span>
+        <h3 class="card-title">実行力・自走力</h3>
+        <p class="card-desc">現場の課題を自ら発見し、仕組みで解決する。チーム開発で進捗遅延を仕組みから解決した経験が証明。</p>
       </div>
-
-      <!-- Project 3 -->
-      <div class="project-card">
-        <div class="project-header">
-          <div>
-            <div class="project-num">03 / INTERNSHIP</div>
-            <div class="project-title">Journally（インターン・チーム開発）</div>
-            <div class="project-period">2026.08.10 – 2026.09.06</div>
-          </div>
-          <span class="project-badge">Internship</span>
-        </div>
-        <div class="project-tech">
-          <span class="tech-tag">Ruby on Rails</span>
-          <span class="tech-tag">Vue</span>
-        </div>
-        <p class="project-desc">
-          インターンでRails + Vue構成のチーム開発に参加。約4週間の期間中、チームで最多となる38コミットを担当。
-        </p>
-        <div class="project-result">
-          <strong>→ Outcome</strong>
-          実務に近いチーム開発のフローで、継続的に実装へ貢献。
-        </div>
-      </div>
-
-      <!-- Project 4 -->
-      <div class="project-card">
-        <div class="project-header">
-          <div>
-            <div class="project-num">04 / TEAM DEV</div>
-            <div class="project-title">Webアプリケーション（チーム開発）</div>
-            <div class="project-period">4名チーム</div>
-          </div>
-          <span class="project-badge">Backend + Infra</span>
-        </div>
-        <div class="project-tech">
-          <span class="tech-tag">PHP</span>
-          <span class="tech-tag">MySQL</span>
-          <span class="tech-tag">Docker</span>
-          <span class="tech-tag">Linux</span>
-          <span class="tech-tag">GitHub Actions</span>
-        </div>
-        <p class="project-desc">
-          4名チームのバックエンド・インフラ担当として実装。API仕様の言語化とレビュー体制の整備で、進捗遅延を仕組みから解決。
-        </p>
-        <div class="project-result">
-          <strong>→ Outcome</strong>
-          API仕様の言語化とレビュー体制の整備により、チームの進捗遅延を解消。
-        </div>
-      </div>
-
-      <!-- Project 5 -->
-      <div class="project-card">
-        <div class="project-header">
-          <div>
-            <div class="project-num">05 / HACKATHON</div>
-            <div class="project-title">スポーツ用品提案AIシステム（Bluvicハッカソン）</div>
-            <div class="project-period">2026.05</div>
-          </div>
-          <span class="project-badge">Hackathon</span>
-        </div>
-        <div class="project-tech">
-          <span class="tech-tag">YOLOv8</span>
-          <span class="tech-tag">ChatGPT API (gpt-4o)</span>
-          <span class="tech-tag">Python</span>
-        </div>
-        <p class="project-desc">
-          初対面チームで意見が割れた際、全案の強みを統合して「フォーム解析→AIラケット提案」に昇華。
-          実装では軽量モデルYOLOv8で低遅延処理し、座標データのみをGPT-4oに構造化渡しすることでトークン削減と高精度提案を両立。
-        </p>
-        <div class="project-result">
-          <strong>→ Outcome</strong>
-          チーム統合ファシリテーション＋AI/MLパイプライン設計の両面で貢献。
-        </div>
-      </div>
-
-      <!-- Project 6 -->
-      <div class="project-card">
-        <div class="project-header">
-          <div>
-            <div class="project-num">06 / WORKSHOP</div>
-            <div class="project-title">産学連携「生成AIワークショップ」新規事業構想</div>
-            <div class="project-period">2023.06 / 2024.11</div>
-          </div>
-          <span class="project-badge award">-生成AIワークショップ-最優秀賞</span>
-        </div>
-        <p class="project-desc">
-          IT企業との合同ワークショップで、AIを活用したビジネスモデルを提案。
-          2023年は観光×メタバース「MetaRide Kyoto」:全チーム中1位を獲得、2024年は物流2024年問題に対するAR教育システムを企画しました。
-        </p>
-        <div class="project-result">
-          <strong>→ Outcome</strong>
-          対立意見の強みを掛け合わせて統合する構想力と、ビジネス文脈での技術提案力を評価され受賞。
-        </div>
-      </div>
-    </section>
-
-    <!-- SKILLS -->
-    <section class="section" id="skills">
-      <div class="section-header">
-        <span class="section-icon">./skills</span>
-        <span class="section-title">技術スキル</span>
-      </div>
-
-      <div class="skills-grid">
-        <div class="skill-group">
-          <div class="skill-group-title">Backend / DB</div>
-          <div class="skill-item"><span class="skill-dot"></span>PHP（フルスクラッチ）</div>
-          <div class="skill-item"><span class="skill-dot"></span>MySQL / DB正規化</div>
-          <div class="skill-item"><span class="skill-dot"></span>Ruby on Rails（インターンで実務使用）</div>
-          <div class="skill-item"><span class="skill-dot"></span>Go（触れた程度）</div>
-          <div class="skill-item"><span class="skill-dot"></span>Java（課題で認証・DI・REST を実装）</div>
-        </div>
-        <div class="skill-group">
-          <div class="skill-group-title">Frontend</div>
-          <div class="skill-item"><span class="skill-dot"></span>Next.js / React</div>
-          <div class="skill-item"><span class="skill-dot"></span>Vue（インターンで実務使用）</div>
-          <div class="skill-item"><span class="skill-dot"></span>HTML / CSS</div>
-          <div class="skill-item"><span class="skill-dot"></span>Swift / iOS（触れた程度）</div>
-          <div class="skill-item"><span class="skill-dot"></span>Supabase / Stripe</div>
-        </div>
-        <div class="skill-group">
-          <div class="skill-group-title">Infra / Cloud</div>
-          <div class="skill-item"><span class="skill-dot"></span>Docker</div>
-          <div class="skill-item"><span class="skill-dot"></span>Linux / Apache</div>
-          <div class="skill-item"><span class="skill-dot"></span>GitHub Actions (CI/CD)</div>
-          <div class="skill-item"><span class="skill-dot"></span>Netlify</div>
-        </div>
-        <div class="skill-group">
-          <div class="skill-group-title">AI / ML</div>
-          <div class="skill-item"><span class="skill-dot"></span>YOLOv8（物体検知）</div>
-          <div class="skill-item"><span class="skill-dot"></span>ChatGPT API (gpt-4o)</div>
-          <div class="skill-item"><span class="skill-dot"></span>生成AI活用設計</div>
-          <div class="skill-item"><span class="skill-dot"></span>Claude Code / Claude API（個人開発で活用）</div>
-          <div class="skill-item"><span class="skill-dot"></span>LangChain / Bedrock（触れた程度）</div>
-        </div>
-      </div>
-    </section>
-
-    <!-- STRENGTHS -->
-    <section class="section" id="strengths">
-      <div class="section-header">
-        <span class="section-icon">./strengths</span>
-        <span class="section-title">強み</span>
-      </div>
-
-      <div class="strengths-grid">
-        <div class="strength-card">
-          <span class="strength-icon">🧠</span>
-          <div class="strength-title">概念思考力</div>
-          <div class="strength-desc">情報を整理して将来を予測し、物事の本質を見抜く力。ワークショップ2連覇の基盤。</div>
-        </div>
-        <div class="strength-card">
-          <span class="strength-icon">⚙️</span>
-          <div class="strength-title">実装力</div>
-          <div class="strength-desc">フルスクラッチ開発でブラックボックスを作らない。根本から深掘りするモグラ型の探究心。</div>
-        </div>
-        <div class="strength-card">
-          <span class="strength-icon">🚀</span>
-          <div class="strength-title">実行力・自走力</div>
-          <div class="strength-desc">現場の課題を自ら発見し、仕組みで解決する。チーム開発で進捗遅延を仕組みから解決した経験が証明。</div>
-        </div>
-      </div>
-    </section>
-
-    <!-- WORK EXPERIENCE -->
-    <section class="section" id="experience">
-      <div class="section-header">
-        <span class="section-icon">./experience</span>
-        <span class="section-title">現場経験</span>
-      </div>
-
-      <div class="work-item">
-        <div class="work-period">2025.10 – 2025.11</div>
-        <div>
-          <div class="work-name">旅館（おてつたび）</div>
-          <div class="work-desc">繁忙期の清掃・接客業務。指示待ちにならず自ら仕事を見つける自走力を発揮。「業務の飲み込みが早く、自分でできることを積極的に探し実行に移してくれた」と高評価。</div>
-        </div>
-      </div>
-      <div class="work-item">
-        <div class="work-period">2025.05 – 2025.06</div>
-        <div>
-          <div class="work-name">リゾートホテル</div>
-          <div class="work-desc">接客・清掃業務。</div>
-        </div>
-      </div>
-      <div class="work-item">
-        <div class="work-period">2023.12 – 2025.02</div>
-        <div>
-          <div class="work-name">居酒屋</div>
-          <div class="work-desc">ホールスタッフ。現場コミュニケーションと顧客目線のUX感覚を培う。</div>
-        </div>
-      </div>
-    </section>
-
-    <!-- GITHUB ACTIVITY -->
-    <section class="section" id="activity">
-      <div class="section-header">
-        <span class="section-icon">./activity</span>
-        <span class="section-title">GitHub Activity</span>
-      </div>
-
-      <div class="contrib-card">
-        <div class="contrib-header">
-          <span class="contrib-total" id="contrib-total">Loading…</span>
-          <a class="contrib-link" href="https://github.com/shun-os" target="_blank" rel="noopener">@shun-os ↗</a>
-        </div>
-        <div class="contrib-graph-wrap">
-          <div class="contrib-graph" id="contrib-graph" role="img" aria-label="GitHub contribution graph"></div>
-        </div>
-        <div class="contrib-legend">
-          <span>Less</span>
-          <i data-level="0"></i><i data-level="1"></i><i data-level="2"></i><i data-level="3"></i><i data-level="4"></i>
-          <span>More</span>
-        </div>
-      </div>
-    </section>
-
-    <!-- NEXT GOALS -->
-    <section class="section" id="goals">
-      <div class="section-header">
-        <span class="section-icon">./next</span>
-        <span class="section-title">これからやりたいこと</span>
-      </div>
-
-      <div class="strengths-grid">
-        <div class="strength-card">
-          <span class="strength-icon">📚</span>
-          <div class="strength-title">フレームワーク習得</div>
-          <div class="strength-desc">フルスクラッチで内部構造を理解した土台の上に、フレームワークを乗せる段階へ。Spring Boot・Next.js の深い活用など、開発速度と設計品質を高める技術を身につける。</div>
-        </div>
-        <div class="strength-card">
-          <span class="strength-icon">🌐</span>
-          <div class="strength-title">MetaRide Kyoto を実装する</div>
-          <div class="strength-desc">最優秀賞を獲得したコンセプト「MetaRide Kyoto」を、実際に動くプロダクトとして実現したい。AR・生成AI・地域データを組み合わせた体験型の観光サービスを、構想から一人で形にする。</div>
-        </div>
-      </div>
-    </section>
-
-    <!-- CONTACT -->
-    <section class="section" id="contact">
-      <div class="section-header">
-        <span class="section-icon">./contact</span>
-        <span class="section-title">お問い合わせ</span>
-      </div>
-
-      <form class="term-form" id="contact-form" name="contact" method="POST" action="/" data-netlify="true" netlify-honeypot="bot-field">
-        <input type="hidden" name="form-name" value="contact">
-        <p class="hidden-field"><label>Don't fill this out: <input name="bot-field"></label></p>
-
-        <div class="term">
-          <div class="term-bar">
-            <span class="term-dot r"></span><span class="term-dot y"></span><span class="term-dot g"></span>
-            <span class="term-name">contact.sh — shun-os</span>
-          </div>
-          <div class="term-body">
-            <p class="term-line"><span class="term-prompt">$</span> <span class="term-cmd">./contact.sh</span> <span class="term-muted">--to shunsuke</span></p>
-            <p class="term-line term-muted"># お仕事のご相談・インターンのご連絡などお気軽にどうぞ</p>
-          </div>
-        </div>
-
-        <label class="term">
-          <div class="term-bar">
-            <span class="term-dot r"></span><span class="term-dot y"></span><span class="term-dot g"></span>
-            <span class="term-name">email.txt</span>
-          </div>
-          <div class="term-body">
-            <span class="term-label"><span class="term-prompt">&gt;</span> email</span>
-            <input class="term-input" type="email" name="email" placeholder="you@example.com" autocomplete="email" required>
-          </div>
-        </label>
-
-        <label class="term">
-          <div class="term-bar">
-            <span class="term-dot r"></span><span class="term-dot y"></span><span class="term-dot g"></span>
-            <span class="term-name">message.txt</span>
-          </div>
-          <div class="term-body">
-            <span class="term-label"><span class="term-prompt">&gt;</span> message</span>
-            <textarea class="term-input" name="message" rows="5" placeholder="メッセージを入力..." required></textarea>
-          </div>
-        </label>
-
-        <div class="term-actions">
-          <button class="term-submit" type="submit">$ ./send<span class="cursor"></span></button>
-          <span class="term-status" id="contact-status" role="status" aria-live="polite"></span>
-        </div>
-      </form>
-    </section>
-
-    <!-- FOOTER -->
-    <div class="footer-bar">
-      <div class="footer-text">© 2026 Shunsuke Kumatani · 専門学校 情報科学科</div>
-      <div class="footer-text">github.com/shun-os</div>
     </div>
+  </article>
 
-  </main>
-</div>
+  <!-- EXPERIENCE -->
+  <article class="doc" id="experience" data-win="experience" data-title="Experience" data-label="Experience" data-icon="doc" data-w="500" data-h="360">
+    <h2 class="doc-head">Experience <span class="doc-head-sub">現場経験</span></h2>
+    <div class="work-item">
+      <p class="work-period">2025.10 – 2025.11</p>
+      <div>
+        <h3 class="work-name">旅館（おてつたび）</h3>
+        <p class="work-desc">繁忙期の清掃・接客業務。指示待ちにならず自ら仕事を見つける自走力を発揮。「業務の飲み込みが早く、自分でできることを積極的に探し実行に移してくれた」と高評価。</p>
+      </div>
+    </div>
+    <div class="work-item">
+      <p class="work-period">2025.05 – 2025.06</p>
+      <div>
+        <h3 class="work-name">リゾートホテル</h3>
+        <p class="work-desc">接客・清掃業務。</p>
+      </div>
+    </div>
+    <div class="work-item">
+      <p class="work-period">2023.12 – 2025.02</p>
+      <div>
+        <h3 class="work-name">居酒屋</h3>
+        <p class="work-desc">ホールスタッフ。現場コミュニケーションと顧客目線のUX感覚を培う。</p>
+      </div>
+    </div>
+  </article>
 
-<script src="script.js"></script>
+  <!-- GITHUB ACTIVITY -->
+  <article class="doc" id="activity" data-win="activity" data-title="GitHub Activity" data-label="GitHub Activity" data-icon="doc" data-w="560" data-h="260">
+    <h2 class="doc-head">GitHub Activity</h2>
+    <div class="contrib">
+      <div class="contrib-header">
+        <span id="contrib-total">直近1年の活動</span>
+        <a href="https://github.com/shun-os" target="_blank" rel="noopener">@shun-os ↗</a>
+      </div>
+      <div class="contrib-scroll">
+        <div class="contrib-graph" id="contrib-graph" role="img" aria-label="GitHub contribution graph"></div>
+      </div>
+      <!-- グラフを読み込めないとき（JSなし・API制限など）に表示する -->
+      <p class="contrib-fallback" id="contrib-fallback">グラフを表示できませんでした。最新の活動は <a href="https://github.com/shun-os" target="_blank" rel="noopener">github.com/shun-os</a> で見られます。</p>
+      <div class="contrib-legend" aria-hidden="true">
+        <span>Less</span>
+        <i data-level="0"></i><i data-level="1"></i><i data-level="2"></i><i data-level="3"></i><i data-level="4"></i>
+        <span>More</span>
+      </div>
+    </div>
+  </article>
+
+  <!-- NEXT GOALS -->
+  <article class="doc" id="goals" data-win="goals" data-title="Next Goals" data-label="Next Goals" data-icon="doc" data-w="480" data-h="360">
+    <h2 class="doc-head">Next Goals <span class="doc-head-sub">これからやりたいこと</span></h2>
+    <div class="cards">
+      <div class="card">
+        <span class="card-icon" aria-hidden="true">📚</span>
+        <h3 class="card-title">設計の質を上げる</h3>
+        <p class="card-desc">Next.js・Rails・Vue での開発経験をもとに、設計とテストの質を上げる段階へ。Spring Boot も含め、読みやすく変更に強いコードを書ける力を身につける。</p>
+      </div>
+      <div class="card">
+        <span class="card-icon" aria-hidden="true">🌐</span>
+        <h3 class="card-title">MetaRide Kyoto を実装する</h3>
+        <p class="card-desc">最優秀賞を獲得したコンセプト「MetaRide Kyoto」を、実際に動くプロダクトとして実現したい。AR・生成AI・地域データを組み合わせた体験型の観光サービスを、構想から一人で形にする。</p>
+      </div>
+    </div>
+  </article>
+
+  <!-- CONTACT（Netlify Forms：name・項目名・honeypot は変更しないこと） -->
+  <article class="doc doc-term" id="contact" data-win="contact" data-title="contact.sh" data-label="contact.sh" data-icon="term" data-w="500" data-h="420">
+    <h2 class="doc-head">contact.sh <span class="doc-head-sub">お問い合わせ</span></h2>
+    <form class="term-form" id="contact-form" name="contact" method="POST" action="/" data-netlify="true" netlify-honeypot="bot-field">
+      <input type="hidden" name="form-name" value="contact">
+      <p class="hidden-field" aria-hidden="true"><label>Don't fill this out: <input name="bot-field" tabindex="-1" autocomplete="off"></label></p>
+
+      <p class="term-line term-muted">contact.sh — shun-os</p>
+      <p class="term-line"><span class="term-prompt">$</span> ./contact.sh <span class="term-muted">--to shunsuke</span></p>
+      <p class="term-line term-muted"># お仕事のご相談・インターンのご連絡などお気軽にどうぞ</p>
+
+      <label class="term-field">
+        <span class="term-label"><span class="term-prompt">&gt;</span> email <span class="term-muted">(email.txt)</span></span>
+        <input class="term-input" type="email" name="email" placeholder="you@example.com" autocomplete="email" required>
+      </label>
+
+      <label class="term-field">
+        <span class="term-label"><span class="term-prompt">&gt;</span> message <span class="term-muted">(message.txt)</span></span>
+        <textarea class="term-input" name="message" rows="5" placeholder="メッセージを入力..." required></textarea>
+      </label>
+
+      <div class="term-actions">
+        <button class="term-submit" type="submit">$ ./send<span class="cursor"></span></button>
+        <span class="term-status" id="contact-status" role="status" aria-live="polite"></span>
+      </div>
+    </form>
+  </article>
+
+</main>
+
+<script src="mac.js"></script>
 </body>
 </html>
