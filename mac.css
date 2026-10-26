@@ -711,3 +711,51 @@ html:not(.js) .contrib-scroll, html:not(.js) .contrib-legend { display: none; }
 .stack-mode .menu-item { line-height: 28px; }
 .stack-mode .menu-title { padding: 0 7px; }
 .stack-mode .win-resize { display: none; }
+
+/* ----------------------------------------------------------
+   フォルダの一覧表示（Projects は最初からこの表示）
+   ---------------------------------------------------------- */
+.icon-long, .icon-date, .icon-badge, .list-head { display: none; }
+.folder-view.list .icon {
+  display: grid;
+  grid-template-columns: 16px minmax(0, 1fr) 100px;
+  align-items: center;
+  gap: 10px;
+  padding: 4px 10px;
+  text-align: left;
+}
+.folder-view.list .icon-label, .folder-view.list .icon-long { background: none; padding: 0; }
+.folder-view.list .icon.has-long .icon-label { display: none; }
+.folder-view.list .icon-long {
+  display: block;
+  white-space: normal; overflow: visible;
+  font-size: 13px; line-height: 1.4;
+}
+.folder-view.list.cols4 .icon,
+.folder-view.list.cols4 .list-head { grid-template-columns: 16px minmax(0, 1fr) 82px 128px 132px; }
+.folder-view.list .icon-date, .folder-view.list .icon-badge { display: block; font-size: 11px; line-height: 1.35; }
+.folder-view.list .icon-badge:not(:empty) {
+  justify-self: start;
+  border: 1px solid var(--b);
+  padding: 0 5px;
+}
+.folder-view.list .list-head {
+  display: grid; gap: 10px; align-items: center;
+  padding: 2px 10px;
+  border-bottom: 1px solid var(--b);
+  font-size: 11px; font-weight: bold;
+  position: sticky; top: 0; background: var(--w); z-index: 1;
+}
+.folder-view.list .icon.selected, .folder-view.list .icon.selected span { color: var(--w); }
+.folder-view.list .icon.selected .icon-badge { border-color: var(--w); }
+.folder-view.list .icon:hover:not(.selected) { background-image: none; outline: 1px dotted var(--b); outline-offset: -2px; }
+/* アイコン表示のフォルダでは名前を2行まで出す（…で切らない） */
+.folder-view:not(.list) .icon-label {
+  white-space: normal;
+  display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical;
+  text-align: center; line-height: 14px;
+}
+.folder-view.list .icon-kind { width: auto; font-size: 11px; }
+
+/* 壁紙（GitHubの草） */
+.wallpaper { position: absolute; left: 0; top: var(--menubar-h); pointer-events: none; image-rendering: pixelated; }

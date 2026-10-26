@@ -295,12 +295,27 @@
   var projSection = content.querySelector('[data-win="projects"]');
   var projectIds = [];
   if (projSection) {
+    // 一覧表示で「何のプロジェクトか」が初見で分かるよう、本文から名前・種類・時期・状態を取り出す
+    var KIND_JA = { 'SOLO DEV': '個人開発', 'WEB TOOL': '個人開発', 'INTERNSHIP': 'インターン', 'TEAM DEV': 'チーム開発', 'HACKATHON': 'ハッカソン', 'WORKSHOP': 'ワークショップ' };
     Array.prototype.forEach.call(projSection.querySelectorAll('.project'), function (n) {
-      projectIds.push(docDef(n).id);
+      var d = docDef(n);
+      var t = n.querySelector('.project-title');
+      var num = n.querySelector('.project-num');
+      var period = n.querySelector('.project-period');
+      var badge = n.querySelector('.badge');
+      var cat = num ? num.textContent.split('/').pop().trim() : '';
+      d.longTitle = t ? t.textContent.trim() : d.label;
+      d.kindText = KIND_JA[cat] || cat;
+      d.date = period ? Array.prototype.filter.call(period.childNodes, function (c) { return c.nodeType === 3; })
+        .map(function (c) { return c.textContent; }).join('').trim() : '';
+      d.badge = badge ? badge.textContent.trim() : '';
+      projectIds.push(d.id);
     });
     DEFS.projects = {
-      id: 'projects', title: 'Projects', label: 'Projects', icon: 'folder', folder: true,
-      anchor: 'projects', items: projectIds, w: 400, h: 220, noPad: true
+      id: 'projects', title: 'Projects（開発実績）', label: 'Projects', icon: 'folder', folder: true,
+      anchor: 'projects', items: projectIds, w: 680, h: 312, noPad: true,
+      listDefault: true,
+      columns: ['名前', '種類', '時期・規模', '状態']
     };
   }
 
@@ -324,6 +339,87 @@
      ---------------------------------------------------------- */
   var desk = el('div', { class: 'desktop', id: 'desktop' });
   doc.body.appendChild(desk);
+
+  /* ----------------------------------------------------------
+     壁紙：GitHubの草（直近1年）をデスクトップの背景に敷く
+     読み込めないときは、いつものドット柄のまま。
+     ---------------------------------------------------------- */
+  var wallData = null;
+
+  function makeWallPatterns(g) {
+    // 濃さ0〜4を、白黒のドットの密度で表す（4×4の模様）
+    var rows = [
+      ['....', '....', '....', '....'],
+      ['#...', '....', '..#.', '....'],
+      ['#.#.', '.#.#', '#.#.', '.#.#'],
+      ['####', '#.##', '####', '##.#'],
+      ['####', '####', '####', '####']
+    ];
+    return rows.map(function (r) {
+      var c = doc.createElement('canvas');
+      c.width = 4; c.height = 4;
+      var cg = c.getContext('2d');
+      cg.fillStyle = '#fff'; cg.fillRect(0, 0, 4, 4);
+      cg.fillStyle = '#000';
+      r.forEach(function (line, y) {
+        for (var x = 0; x < 4; x++) if (line.charAt(x) === '#') cg.fillRect(x, y, 1, 1);
+      });
+      return g.createPattern(c, 'repeat');
+    });
+  }
+
+  function drawWallpaper(days, total) {
+    if (stackMode) return;
+    if (days) wallData = { days: days, total: total };
+    if (!wallData) return;
+    var cv = desk.querySelector('.wallpaper');
+    if (!cv) {
+      cv = el('canvas', { class: 'wallpaper', 'aria-hidden': 'true' });
+      desk.insertBefore(cv, desk.firstChild);
+    }
+    var W = vw(), H = vh() - MENU_H;
+    cv.width = W; cv.height = H;
+    cv.style.width = W + 'px'; cv.style.height = H + 'px';
+    var g = cv.getContext('2d');
+    g.clearRect(0, 0, W, H);
+    var pats = makeWallPatterns(g);
+
+    var cells = [];
+    var offset = new Date(wallData.days[0].date).getDay();
+    for (var i = 0; i < offset; i++) cells.push(-1);
+    wallData.days.forEach(function (d) { cells.push(+d.level || 0); });
+    var weeks = Math.ceil(cells.length / 7);
+
+    function cell(x, y, s, lv) {
+      if (lv < 0) return;
+      g.fillStyle = '#000';
+      g.fillRect(x, y, s, s);
+      g.fillStyle = pats[lv];
+      g.fillRect(x + 1, y + 1, s - 2, s - 2);
+    }
+    function box(x, y, w, h) {
+      g.fillStyle = '#000'; g.fillRect(x - 1, y - 1, w + 2, h + 2);
+      g.fillStyle = '#fff'; g.fillRect(x, y, w, h);
+    }
+
+    // 1年分を画面の横幅いっぱいの帯にして、下寄せで大きく敷く
+    var pitch = clamp(Math.floor((W - 160) / weeks), 8, 30);
+    var size = pitch - Math.max(2, Math.round(pitch / 6));
+    var gw = (weeks - 1) * pitch + size, gh = 6 * pitch + size;
+    var x0 = Math.round((W - gw) / 2), y0 = H - gh - 64; // 下寄せ（ウィンドウに隠れにくい）
+    box(x0 - 14, y0 - 14, gw + 28, gh + 28);
+    for (var k = 0; k < cells.length; k++) {
+      cell(x0 + Math.floor(k / 7) * pitch, y0 + (k % 7) * pitch, size, cells[k]);
+    }
+    var label = '@' + GITHUB_USER + ' — ' + (wallData.total || 0).toLocaleString() + ' contributions in the last year';
+    g.font = '13px Chicago, ChicagoFLF, Geneva, sans-serif';
+    var tw = Math.ceil(g.measureText(label).width);
+    var ly = y0 + gh + 26;
+    box(x0 - 14, ly, tw + 16, 20);
+    g.fillStyle = '#000';
+    g.textBaseline = 'middle';
+    g.fillText(label, x0 - 6, ly + 10);
+  }
 
   var selectedIcon = null;
   var savedSelection = '';
@@ -362,8 +458,8 @@
       { t: 'Select All', k: '⌘A', a: selectAll, en: function () { return !!activeWin; } }
     ] },
     { id: 'view', label: 'View', items: [
-      { t: 'by Icon', en: function () { return !stackMode; }, a: function () { setView('icon'); }, chk: function () { return viewMode === 'icon'; } },
-      { t: 'by Name', en: function () { return !stackMode; }, a: function () { setView('list'); }, chk: function () { return viewMode === 'list'; } }
+      { t: 'by Icon', en: function () { return !stackMode; }, a: function () { setView('icon'); }, chk: function () { return isView('icon'); } },
+      { t: 'by Name', en: function () { return !stackMode; }, a: function () { setView('list'); }, chk: function () { return isView('list'); } }
     ] },
     { id: 'portfolio', label: 'Portfolio', items: [
       portfolioItem('profile.md', 'profile'),
@@ -524,7 +620,13 @@
     var d = DEFS[id];
     var kind = d.kind || (d.folder ? 'folder' : d.icon);
     var b = el('button', { class: 'icon', type: 'button', 'data-id': id, title: d.label },
-      [artImg(iconArt(id)), el('span', { class: 'icon-label', text: d.label }), el('span', { class: 'icon-kind', text: KIND[kind] || '' })]);
+      [artImg(iconArt(id)),
+        el('span', { class: 'icon-label', text: d.label }),
+        d.longTitle ? el('span', { class: 'icon-long', text: d.longTitle }) : null,
+        el('span', { class: 'icon-kind', text: d.kindText || KIND[kind] || '' }),
+        d.longTitle ? el('span', { class: 'icon-date', text: d.date || '—' }) : null,
+        d.longTitle ? el('span', { class: 'icon-badge', text: d.badge || '' }) : null]);
+    if (d.longTitle) b.classList.add('has-long');
 
     var start = null;
     b.addEventListener('pointerdown', function (e) {
@@ -946,7 +1048,8 @@
      フォルダ
      ---------------------------------------------------------- */
   function buildFolder(win) {
-    var view = el('div', { class: 'folder-view' + (viewMode === 'list' ? ' list' : '') });
+    var d = win.def;
+    var view = el('div', { class: 'folder-view' + (viewMode === 'list' || d.listDefault ? ' list' : '') + (d.columns ? ' cols4' : '') });
     view.addEventListener('pointerdown', function (e) { if (e.target === view) selectIcon(null); });
     win.view = view;
     return view;
@@ -957,6 +1060,11 @@
     if (!win || !win.view) return;
     var items = id === 'trash' ? trashed.slice() : DEFS[id].items;
     win.view.textContent = '';
+    if (DEFS[id].columns) {
+      // 一覧表示の見出し行（アイコン表示のときはCSSで隠す）
+      win.view.appendChild(el('div', { class: 'list-head', 'aria-hidden': 'true' },
+        [el('span', {})].concat(DEFS[id].columns.map(function (c) { return el('span', { text: c }); }))));
+    }
     items.forEach(function (it) { win.view.appendChild(makeIcon(it, false)); });
     if (!items.length) win.view.appendChild(el('p', { class: 'folder-empty', text: id === 'trash' ? 'ゴミ箱は空です。' : '' }));
     var kb = items.length * 42 + 128;
@@ -966,11 +1074,17 @@
     win.info.appendChild(el('span', { text: (400 - Math.min(kb, 380)) + 'K available' }));
   }
 
+  // 前面のフォルダの表示だけを切り替える（前面がフォルダでなければ全部）
   function setView(mode) {
+    if (activeWin && activeWin.view) { activeWin.view.classList.toggle('list', mode === 'list'); return; }
     viewMode = mode;
     Object.keys(wins).forEach(function (k) {
       if (wins[k].view) wins[k].view.classList.toggle('list', mode === 'list');
     });
+  }
+  function isView(mode) {
+    var v = activeWin && activeWin.view;
+    return v ? v.classList.contains('list') === (mode === 'list') : viewMode === mode;
   }
 
   /* ----------------------------------------------------------
@@ -1357,6 +1471,7 @@
         graphEl.textContent = '';
         graphEl.appendChild(frag);
         totalEl.textContent = total.toLocaleString() + ' contributions in the last year';
+        drawWallpaper(days, total);
         var sc = graphEl.parentNode;
         if (sc) sc.scrollLeft = sc.scrollWidth;
       })
@@ -1419,6 +1534,7 @@
     resizeTimer = setTimeout(function () {
       // PC表示 ⇔ 縦並びが切り替わる幅になったら、作り直す
       if (computeStack() !== stackMode) { location.reload(); return; }
+      drawWallpaper();
       layoutDesktop();
       openWins().forEach(function (w) {
         var r = w.el.getBoundingClientRect();
@@ -1445,7 +1561,7 @@
      ---------------------------------------------------------- */
   DEFS.profile && (DEFS.profile.pos = function () { return { x: 20, y: MENU_H + 12 }; });
   DEFS.projects && (DEFS.projects.pos = function () {
-    return { x: Math.min(vw() - 400 - 120, 330), y: Math.min(vh() - 240, MENU_H + 300) };
+    return { x: Math.min(vw() - 680 - 110, 300), y: Math.min(vh() - 330, MENU_H + 270) };
   });
 
   function boot(done) {
